@@ -5,6 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+body {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+}
+  </style>
 </head>
 <body>
 
@@ -24,8 +30,8 @@
   </section>
 
   <section id="combined">
-    <button id="combine">Download</button>
-    <audio id="combined" controls></audio>
+    <button id="combine-button">Combine</button>
+    <audio id="combined-audio" controls></audio>
 
   </section>
 <script type="module">
@@ -36,9 +42,12 @@ window.mediaRecorder2 = new MediaRecorder(stream)
 
 let button1 = document.querySelector('#word-1 button')
 let button2 = document.querySelector('#word-2 button')
+let combineButton = document.querySelector('button#combine-button')
+
 
 let audio1 = document.querySelector('#word-1 audio')
 let audio2 = document.querySelector('#word-2 audio')
+let combinedAudio = document.querySelector('#combined-audio')
 
 button1.addEventListener('mousedown', e => {
   mediaRecorder1.start()
@@ -70,6 +79,19 @@ mediaRecorder2.addEventListener('dataavailable', e => {
   audio2.src = URL.createObjectURL(blob)
   audio2.closest('div').blob = blob
 })
+
+
+
+combineButton.addEventListener('click', e => {
+  let divs = Array.from(document.querySelectorAll('div'))
+
+  let blobs = divs.map(div => div.blob)
+
+  let combinedBlob = new Blob(blobs)
+
+  combinedAudio.src = URL.createObjectURL(combinedBlob)
+})
+
 </script>
 </body>
 </html>
