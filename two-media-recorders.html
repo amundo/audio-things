@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="word-1">
+    <button>one</button>
+    <audio controls></audio>
+  </div>
+  
+  <div id="word-2">
+    <button>two </button>
+    <audio controls></audio>
+  </div>
+
+<script type="module">
+
+let stream = await navigator.mediaDevices.getUserMedia({audio:true})
+window.mediaRecorder1 = new MediaRecorder(stream)
+window.mediaRecorder2 = new MediaRecorder(stream)
+
+let button1 = document.querySelector('#word-1 button')
+let button2 = document.querySelector('#word-2 button')
+
+let audio1 = document.querySelector('#word-1 audio')
+let audio2 = document.querySelector('#word-2 audio')
+
+button1.addEventListener('mousedown', e => {
+  mediaRecorder1.start()
+})
+
+button1.addEventListener('mouseup', e => {
+  mediaRecorder1.stop()
+})
+
+mediaRecorder1.addEventListener('dataavailable', e => {
+  audio1.src = URL.createObjectURL(new Blob([e.data]))
+})
+
+
+
+
+button2.addEventListener('mousedown', e => {
+  mediaRecorder2.start()
+})
+
+button2.addEventListener('mouseup', e => {
+  mediaRecorder2.stop()
+})
+
+mediaRecorder2.addEventListener('dataavailable', e => {
+  audio2.src = URL.createObjectURL(new Blob([e.data]))
+})
+</script>
+</body>
+</html>
