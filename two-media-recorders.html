@@ -7,17 +7,27 @@
   <title>Document</title>
 </head>
 <body>
-  
-  <div id="word-1">
-    <button>one</button>
-    <audio controls></audio>
-  </div>
-  
-  <div id="word-2">
-    <button>two </button>
-    <audio controls></audio>
-  </div>
 
+  <section id="words">
+
+    
+    <div id="word-1">
+      <button>one</button>
+      <audio controls></audio>
+    </div>
+    
+    <div id="word-2">
+      <button>two </button>
+      <audio controls></audio>
+    </div>
+    
+  </section>
+
+  <section id="combined">
+    <button id="combine">Download</button>
+    <audio id="combined" controls></audio>
+
+  </section>
 <script type="module">
 
 let stream = await navigator.mediaDevices.getUserMedia({audio:true})
@@ -39,7 +49,9 @@ button1.addEventListener('mouseup', e => {
 })
 
 mediaRecorder1.addEventListener('dataavailable', e => {
-  audio1.src = URL.createObjectURL(new Blob([e.data]))
+  let blob = new Blob([e.data])
+  audio1.src = URL.createObjectURL(blob)
+  audio1.closest('div').blob = blob
 })
 
 
@@ -54,7 +66,9 @@ button2.addEventListener('mouseup', e => {
 })
 
 mediaRecorder2.addEventListener('dataavailable', e => {
-  audio2.src = URL.createObjectURL(new Blob([e.data]))
+  let blob = new Blob([e.data])
+  audio2.src = URL.createObjectURL(blob)
+  audio2.closest('div').blob = blob
 })
 </script>
 </body>
